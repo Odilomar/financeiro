@@ -1,6 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Where } from 'src/utils';
 import { Repository } from 'typeorm';
+import { TITLENOTFOUND } from '.';
 import { CreateTitleDto } from './dto';
 import { TitleORM } from './title.entity';
 
@@ -10,6 +12,13 @@ export class TitleService {
     @InjectRepository(TitleORM)
     private readonly titleRepository: Repository<TitleORM>,
   ) {}
+
+  async findOne(where: Where<TitleORM>) {
+    const title = await this.titleRepository.findOne({ where });
+    if (!title) throw new NotFoundException(TITLENOTFOUND);
+
+    return title;
+  }
 
   async create(args: CreateTitleDto) {
     const title = this.titleRepository.create({ ...args });
