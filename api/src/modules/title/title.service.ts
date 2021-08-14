@@ -32,4 +32,10 @@ export class TitleService {
 
     return this.titleRepository.save(title);
   }
+
+  async delete(id: number) {
+    const title = await this.findOne({ id });
+
+    return this.titleRepository.delete(title);
+  }
 }

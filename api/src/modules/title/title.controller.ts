@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseIntPipe,
@@ -30,5 +31,10 @@ export class TitleController {
     @Body() args: UpdateTitleDto,
   ) {
     return this.titleService.update(id, args);
+  }
+
+  @Delete('/:id')
+  async delete(@Param('id', ParseIntPipe) id: number) {
+    return this.titleService.delete(id);
   }
 }
