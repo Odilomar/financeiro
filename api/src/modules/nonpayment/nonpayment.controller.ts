@@ -7,13 +7,23 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
-import { CreateNonPaymentDto, UpdateNonPaymentDto } from './dto';
+import {
+  CreateNonPaymentDto,
+  FindNonPaymentDto,
+  UpdateNonPaymentDto,
+} from './dto';
 import { NonPaymentService } from './nonpayment.service';
 
 @Controller('nonpayments')
 export class NonPaymentController {
   constructor(private readonly nonPaymentService: NonPaymentService) {}
+
+  @Get()
+  async find(@Query() args: FindNonPaymentDto) {
+    return this.nonPaymentService.find(args);
+  }
 
   @Get('/:id')
   async findOne(@Param('id') id: number) {

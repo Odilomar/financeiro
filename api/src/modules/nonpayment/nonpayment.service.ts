@@ -5,10 +5,14 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Where } from 'src/utils';
+import { GenericFindReturnDto, objectToArray, Where } from 'src/utils';
 import { Repository } from 'typeorm';
 import { TitleService, UserService } from '..';
-import { CreateNonPaymentDto, UpdateNonPaymentDto } from './dto';
+import {
+  CreateNonPaymentDto,
+  FindNonPaymentDto,
+  UpdateNonPaymentDto,
+} from './dto';
 import { NONPAYMENTNOTFOUND } from './nonpayment.const';
 import { NonPaymentORM } from './nonpayment.entity';
 
@@ -22,6 +26,21 @@ export class NonPaymentService {
     @Inject(forwardRef(() => TitleService))
     private readonly titleService: TitleService,
   ) {}
+
+  async find({ take, skip, ...args }: FindNonPaymentDto) {
+    const where = objectToArray<NonPaymentORM>(args);
+
+    const [data, total] = await this.nonPaymentRepository.findAndCount({
+      where,
+    });
+
+    return {
+      data,
+      total,
+      take,
+      skip,
+    } as GenericFindReturnDto<NonPaymentORM>;
+  }
 
   async findOne(where?: Where<NonPaymentORM>) {
     const nonPayment = await this.nonPaymentRepository.findOne({ where });
