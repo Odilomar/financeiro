@@ -1,5 +1,12 @@
-import { Body, Controller, Post } from '@nestjs/common';
-import { CreateUserDto } from './dto';
+import {
+  Body,
+  Controller,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+} from '@nestjs/common';
+import { CreateUserDto, UpdateUserDto } from './dto';
 import { UserService } from './user.service';
 
 @Controller('users')
@@ -9,5 +16,13 @@ export class UserController {
   @Post()
   async create(@Body() args: CreateUserDto) {
     return this.userService.create(args);
+  }
+
+  @Put('/:id')
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() args: UpdateUserDto,
+  ) {
+    return this.userService.update(id, args);
   }
 }
