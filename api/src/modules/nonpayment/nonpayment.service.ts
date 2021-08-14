@@ -58,4 +58,10 @@ export class NonPaymentService {
 
     return this.nonPaymentRepository.save(nonPayment);
   }
+
+  async delete(id: number) {
+    const nonPayment = await this.findOne({ id });
+
+    return this.nonPaymentRepository.delete(nonPayment);
+  }
 }

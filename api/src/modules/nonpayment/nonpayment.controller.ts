@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseIntPipe,
@@ -30,5 +31,10 @@ export class NonPaymentController {
     @Body() args: UpdateNonPaymentDto,
   ) {
     return this.nonPaymentService.update(id, args);
+  }
+
+  @Delete('/:id')
+  async delete(@Param('id', ParseIntPipe) id: number) {
+    return this.nonPaymentService.delete(id);
   }
 }
