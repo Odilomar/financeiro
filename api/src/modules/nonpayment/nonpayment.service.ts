@@ -13,7 +13,10 @@ import {
   FindNonPaymentDto,
   UpdateNonPaymentDto,
 } from './dto';
-import { NONPAYMENTNOTFOUND } from './nonpayment.const';
+import {
+  DEFAULTNONPAYMENTRELATIONS,
+  NONPAYMENTNOTFOUND,
+} from './nonpayment.const';
 import { NonPaymentORM } from './nonpayment.entity';
 
 @Injectable()
@@ -32,6 +35,7 @@ export class NonPaymentService {
 
     const [data, total] = await this.nonPaymentRepository.findAndCount({
       where,
+      relations: DEFAULTNONPAYMENTRELATIONS,
     });
 
     return {
@@ -43,7 +47,10 @@ export class NonPaymentService {
   }
 
   async findOne(where?: Where<NonPaymentORM>) {
-    const nonPayment = await this.nonPaymentRepository.findOne({ where });
+    const nonPayment = await this.nonPaymentRepository.findOne({
+      where,
+      relations: DEFAULTNONPAYMENTRELATIONS,
+    });
     if (!nonPayment) throw new NotFoundException(NONPAYMENTNOTFOUND);
 
     return nonPayment;

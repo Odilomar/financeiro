@@ -4,7 +4,7 @@ import { GenericFindReturnDto, objectToArray, Where } from 'src/utils';
 import { Repository } from 'typeorm';
 import { CreateUserDto, UpdateUserDto } from './dto';
 import { FindUserDto } from './dto/find-user.dto';
-import { USERNOTFOUND } from './user.const';
+import { DEFAULTUSERRELATIONS, USERNOTFOUND } from './user.const';
 import { UserORM } from './user.entity';
 
 @Injectable()
@@ -17,7 +17,10 @@ export class UserService {
   async find({ take, skip, ...args }: FindUserDto) {
     const where = await objectToArray<Where<UserORM>>(args);
 
-    const [data, total] = await this.userRepository.findAndCount({ where });
+    const [data, total] = await this.userRepository.findAndCount({
+      where,
+      relations: DEFAULTUSERRELATIONS,
+    });
     return {
       data,
       total,
@@ -27,7 +30,10 @@ export class UserService {
   }
 
   async findOne(where?: Where<UserORM>) {
-    const user = this.userRepository.findOne({ where });
+    const user = this.userRepository.findOne({
+      where,
+      relations: DEFAULTUSERRELATIONS,
+    });
     if (!user) throw new NotFoundException(USERNOTFOUND);
 
     return user;

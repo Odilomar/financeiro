@@ -4,6 +4,7 @@ import { GenericFindReturnDto, objectToArray, Where } from 'src/utils';
 import { Repository } from 'typeorm';
 import { TITLENOTFOUND } from '.';
 import { CreateTitleDto, UpdateTitleDto, FindTitleDto } from './dto';
+import { DEFAULTTITLERELATIONS } from './title.const';
 import { TitleORM } from './title.entity';
 
 @Injectable()
@@ -16,7 +17,10 @@ export class TitleService {
   async find({ take, skip, ...args }: FindTitleDto) {
     const where = objectToArray<TitleORM>(args);
 
-    const [data, total] = await this.titleRepository.findAndCount({ where });
+    const [data, total] = await this.titleRepository.findAndCount({
+      where,
+      relations: DEFAULTTITLERELATIONS,
+    });
 
     return {
       data,
@@ -27,7 +31,10 @@ export class TitleService {
   }
 
   async findOne(where: Where<TitleORM>) {
-    const title = await this.titleRepository.findOne({ where });
+    const title = await this.titleRepository.findOne({
+      where,
+      relations: DEFAULTTITLERELATIONS,
+    });
     if (!title) throw new NotFoundException(TITLENOTFOUND);
 
     return title;
