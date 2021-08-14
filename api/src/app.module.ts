@@ -1,8 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { config } from 'dotenv';
-import { UserModule } from './modules';
-import { TitleModule } from './modules/title/title.module';
+import { UserModule, TitleModule } from './modules';
 
 config();
 
