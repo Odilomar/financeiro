@@ -3,8 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { GenericFindReturnDto, objectToArray, Where } from 'src/utils';
 import { Repository } from 'typeorm';
 import { TITLENOTFOUND } from '.';
-import { CreateTitleDto, UpdateTitleDto } from './dto';
-import { FindTitleDto } from './dto/find-title.dto';
+import { CreateTitleDto, UpdateTitleDto, FindTitleDto } from './dto';
 import { TitleORM } from './title.entity';
 
 @Injectable()

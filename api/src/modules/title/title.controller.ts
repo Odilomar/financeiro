@@ -9,8 +9,7 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
-import { CreateTitleDto, UpdateTitleDto } from './dto';
-import { FindTitleDto } from './dto/find-title.dto';
+import { CreateTitleDto, UpdateTitleDto, FindTitleDto } from './dto';
 import { TitleService } from './title.service';
 
 @Controller('titles')
