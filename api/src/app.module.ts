@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { config } from 'dotenv';
-import { UserModule, TitleModule } from './modules';
+import { UserModule, TitleModule, NonpaymentModule } from './modules';
 
 config();
 
@@ -25,6 +25,7 @@ const { DB_HOST, DB_PORT, DB_USER, DB_PASS, DB_NAME } = process.env;
     }),
     UserModule,
     TitleModule,
+    NonpaymentModule,
   ],
   controllers: [],
   providers: [],
