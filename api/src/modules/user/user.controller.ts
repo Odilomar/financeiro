@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
   Param,
   ParseIntPipe,
   Post,
@@ -13,6 +14,11 @@ import { UserService } from './user.service';
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
+
+  @Get('/:id')
+  async findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.userService.findOne({ id });
+  }
 
   @Post()
   async create(@Body() args: CreateUserDto) {
