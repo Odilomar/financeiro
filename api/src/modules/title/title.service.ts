@@ -1,10 +1,14 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { GenericFindReturnDto, objectToArray, Where } from 'src/utils';
 import { Repository } from 'typeorm';
 import { TITLENOTFOUND } from '.';
 import { CreateTitleDto, UpdateTitleDto, FindTitleDto } from './dto';
-import { DEFAULTTITLERELATIONS } from './title.const';
+import { DEFAULTTITLERELATIONS, TITLECANTBEDELETED } from './title.const';
 import { TitleORM } from './title.entity';
 
 @Injectable()
@@ -55,6 +59,9 @@ export class TitleService {
 
   async delete(id: number) {
     const title = await this.findOne({ id });
+
+    if (title.nonPayments.length > 0)
+      throw new UnauthorizedException(TITLECANTBEDELETED);
 
     return this.titleRepository.delete(title);
   }
