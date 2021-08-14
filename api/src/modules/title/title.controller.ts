@@ -7,13 +7,20 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { CreateTitleDto, UpdateTitleDto } from './dto';
+import { FindTitleDto } from './dto/find-title.dto';
 import { TitleService } from './title.service';
 
 @Controller('titles')
 export class TitleController {
   constructor(private readonly titleService: TitleService) {}
+
+  @Get()
+  async find(@Query() args: FindTitleDto) {
+    return this.titleService.find(args);
+  }
 
   @Get('/:id')
   async findOne(@Param('id', ParseIntPipe) id: number) {

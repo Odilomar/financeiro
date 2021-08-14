@@ -1,9 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Where } from 'src/utils';
+import { GenericFindReturnDto, objectToArray, Where } from 'src/utils';
 import { Repository } from 'typeorm';
 import { TITLENOTFOUND } from '.';
 import { CreateTitleDto, UpdateTitleDto } from './dto';
+import { FindTitleDto } from './dto/find-title.dto';
 import { TitleORM } from './title.entity';
 
 @Injectable()
@@ -12,6 +13,19 @@ export class TitleService {
     @InjectRepository(TitleORM)
     private readonly titleRepository: Repository<TitleORM>,
   ) {}
+
+  async find({ take, skip, ...args }: FindTitleDto) {
+    const where = objectToArray<TitleORM>(args);
+
+    const [data, total] = await this.titleRepository.findAndCount({ where });
+
+    return {
+      data,
+      total,
+      take,
+      skip,
+    } as GenericFindReturnDto<TitleORM>;
+  }
 
   async findOne(where: Where<TitleORM>) {
     const title = await this.titleRepository.findOne({ where });
