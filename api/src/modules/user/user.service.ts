@@ -1,10 +1,18 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { GenericFindReturnDto, objectToArray, Where } from 'src/utils';
 import { Repository } from 'typeorm';
 import { CreateUserDto, UpdateUserDto } from './dto';
 import { FindUserDto } from './dto/find-user.dto';
-import { DEFAULTUSERRELATIONS, USERNOTFOUND } from './user.const';
+import {
+  DEFAULTUSERRELATIONS,
+  USERCANTBEDELETED,
+  USERNOTFOUND,
+} from './user.const';
 import { UserORM } from './user.entity';
 
 @Injectable()
@@ -54,6 +62,9 @@ export class UserService {
 
   async delete(id: number) {
     const user = await this.findOne({ id });
+
+    if (user.nonPayments.length > 0)
+      throw new UnauthorizedException(USERCANTBEDELETED);
 
     return this.userRepository.delete(user);
   }
