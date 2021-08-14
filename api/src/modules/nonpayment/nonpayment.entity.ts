@@ -37,11 +37,11 @@ export class NonPaymentORM {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @ManyToOne((type) => UserORM, (x) => x.nonPayments)
+  @ManyToOne(() => UserORM, (x) => x.nonPayments)
   @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
   user?: UserORM;
 
-  @ManyToOne((type) => TitleORM, (x) => x.nonPayments)
+  @ManyToOne(() => TitleORM, (x) => x.nonPayments)
   @JoinColumn({ name: 'title_id', referencedColumnName: 'id' })
   title?: TitleORM;
 }

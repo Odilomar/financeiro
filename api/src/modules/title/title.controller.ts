@@ -3,6 +3,8 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   Param,
   ParseIntPipe,
   Post,
@@ -31,6 +33,7 @@ export class TitleController {
     return this.titleService.create(args);
   }
 
+  @HttpCode(HttpStatus.NO_CONTENT)
   @Put('/:id')
   async update(
     @Param('id', ParseIntPipe) id: number,
@@ -39,6 +42,7 @@ export class TitleController {
     return this.titleService.update(id, args);
   }
 
+  @HttpCode(HttpStatus.NO_CONTENT)
   @Delete('/:id')
   async delete(@Param('id', ParseIntPipe) id: number) {
     return this.titleService.delete(id);

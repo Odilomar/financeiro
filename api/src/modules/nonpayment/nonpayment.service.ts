@@ -31,7 +31,7 @@ export class NonPaymentService {
   ) {}
 
   async find({ take, skip, ...args }: FindNonPaymentDto) {
-    const where = objectToArray<NonPaymentORM>(args);
+    const where = await objectToArray<NonPaymentORM>(args);
 
     const [data, total] = await this.nonPaymentRepository.findAndCount({
       where,
@@ -86,8 +86,8 @@ export class NonPaymentService {
   }
 
   async delete(id: number) {
-    const nonPayment = await this.findOne({ id });
+    await this.findOne({ id });
 
-    return this.nonPaymentRepository.delete(nonPayment);
+    await this.nonPaymentRepository.delete({ id });
   }
 }

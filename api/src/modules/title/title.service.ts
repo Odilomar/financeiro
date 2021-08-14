@@ -19,7 +19,7 @@ export class TitleService {
   ) {}
 
   async find({ take, skip, ...args }: FindTitleDto) {
-    const where = objectToArray<TitleORM>(args);
+    const where = await objectToArray<TitleORM>(args);
 
     const [data, total] = await this.titleRepository.findAndCount({
       where,
@@ -63,6 +63,6 @@ export class TitleService {
     if (title.nonPayments.length > 0)
       throw new UnauthorizedException(TITLECANTBEDELETED);
 
-    return this.titleRepository.delete(title);
+    await this.titleRepository.delete({ id });
   }
 }

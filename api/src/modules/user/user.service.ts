@@ -38,7 +38,7 @@ export class UserService {
   }
 
   async findOne(where?: Where<UserORM>) {
-    const user = this.userRepository.findOne({
+    const user = await this.userRepository.findOne({
       where,
       relations: DEFAULTUSERRELATIONS,
     });
@@ -66,6 +66,6 @@ export class UserService {
     if (user.nonPayments.length > 0)
       throw new UnauthorizedException(USERCANTBEDELETED);
 
-    return this.userRepository.delete(user);
+    await this.userRepository.delete({ id });
   }
 }

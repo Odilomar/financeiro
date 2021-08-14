@@ -22,6 +22,6 @@ export class TitleORM {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @OneToMany(() => NonPaymentORM, (x) => x.user)
+  @OneToMany(() => NonPaymentORM, (x) => x.title)
   nonPayments?: NonPaymentORM[];
 }

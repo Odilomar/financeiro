@@ -3,6 +3,8 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   Param,
   ParseIntPipe,
   Post,
@@ -35,6 +37,7 @@ export class NonPaymentController {
     return this.nonPaymentService.create(args);
   }
 
+  @HttpCode(HttpStatus.NO_CONTENT)
   @Put('/:id')
   async update(
     @Param('id', ParseIntPipe) id: number,
@@ -43,6 +46,7 @@ export class NonPaymentController {
     return this.nonPaymentService.update(id, args);
   }
 
+  @HttpCode(HttpStatus.NO_CONTENT)
   @Delete('/:id')
   async delete(@Param('id', ParseIntPipe) id: number) {
     return this.nonPaymentService.delete(id);
