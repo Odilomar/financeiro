@@ -1,8 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Where } from 'src/utils';
+import { GenericFindReturnDto, objectToArray, Where } from 'src/utils';
 import { Repository } from 'typeorm';
 import { CreateUserDto, UpdateUserDto } from './dto';
+import { FindUserDto } from './dto/find-user.dto';
 import { USERNOTFOUND } from './user.const';
 import { UserORM } from './user.entity';
 
@@ -12,6 +13,18 @@ export class UserService {
     @InjectRepository(UserORM)
     private readonly userRepository: Repository<UserORM>,
   ) {}
+
+  async find({ take, skip, ...args }: FindUserDto) {
+    const where = await objectToArray<Where<UserORM>>(args);
+
+    const [data, total] = await this.userRepository.findAndCount({ where });
+    return {
+      data,
+      total,
+      take,
+      skip,
+    } as GenericFindReturnDto<UserORM>;
+  }
 
   async findOne(where?: Where<UserORM>) {
     const user = this.userRepository.findOne({ where });

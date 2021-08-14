@@ -7,13 +7,20 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { CreateUserDto, UpdateUserDto } from './dto';
+import { FindUserDto } from './dto/find-user.dto';
 import { UserService } from './user.service';
 
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
+
+  @Get()
+  async find(@Query() args: FindUserDto) {
+    return this.userService.find(args);
+  }
 
   @Get('/:id')
   async findOne(@Param('id', ParseIntPipe) id: number) {
