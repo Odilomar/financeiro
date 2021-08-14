@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { config } from 'dotenv';
 import { UserModule } from './modules';
+import { TitleModule } from './modules/title/title.module';
 
 config();
 
@@ -24,6 +25,7 @@ const { DB_HOST, DB_PORT, DB_USER, DB_PASS, DB_NAME } = process.env;
       keepConnectionAlive: true,
     }),
     UserModule,
+    TitleModule,
   ],
   controllers: [],
   providers: [],
