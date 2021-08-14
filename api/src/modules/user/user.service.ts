@@ -25,4 +25,11 @@ export class UserService {
 
     return this.userRepository.save(user);
   }
+
+  async delete(id: number) {
+    const user = await this.userRepository.findOne({ id });
+    if (!user) throw new NotFoundException(USERNOTFOUND);
+
+    return this.userRepository.delete(user);
+  }
 }
