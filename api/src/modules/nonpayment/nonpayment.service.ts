@@ -8,7 +8,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Where } from 'src/utils';
 import { Repository } from 'typeorm';
 import { TitleService, UserService } from '..';
-import { CreateNonPaymentDto } from './dto';
+import { CreateNonPaymentDto, UpdateNonPaymentDto } from './dto';
 import { NONPAYMENTNOTFOUND } from './nonpayment.const';
 import { NonPaymentORM } from './nonpayment.entity';
 
@@ -39,6 +39,22 @@ export class NonPaymentService {
       title,
       ...args,
     });
+
+    return this.nonPaymentRepository.save(nonPayment);
+  }
+
+  async update(
+    id: number,
+    { title_id, user_id, ...args }: UpdateNonPaymentDto,
+  ) {
+    const nonPayment = await this.findOne({ id });
+
+    if (title_id)
+      nonPayment.title = await this.titleService.findOne({ id: title_id });
+    if (user_id)
+      nonPayment.user = await this.userService.findOne({ id: user_id });
+
+    Object.assign(nonPayment, args);
 
     return this.nonPaymentRepository.save(nonPayment);
   }

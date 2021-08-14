@@ -1,5 +1,13 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { CreateNonPaymentDto } from './dto';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+} from '@nestjs/common';
+import { CreateNonPaymentDto, UpdateNonPaymentDto } from './dto';
 import { NonPaymentService } from './nonpayment.service';
 
 @Controller('nonpayments')
@@ -14,5 +22,13 @@ export class NonPaymentController {
   @Post()
   async create(@Body() args: CreateNonPaymentDto) {
     return this.nonPaymentService.create(args);
+  }
+
+  @Put('/:id')
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() args: UpdateNonPaymentDto,
+  ) {
+    return this.nonPaymentService.update(id, args);
   }
 }
