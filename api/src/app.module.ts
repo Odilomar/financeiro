@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { config } from 'dotenv';
+import { UserModule } from './modules/user/user.module';
 
 config();
 
@@ -22,6 +23,7 @@ const { DB_HOST, DB_PORT, DB_USER, DB_PASS, DB_NAME } = process.env;
       autoLoadEntities: true,
       keepConnectionAlive: true,
     }),
+    UserModule,
   ],
   controllers: [],
   providers: [],
