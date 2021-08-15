@@ -1,0 +1,44 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ title }}</h4>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body">
+  <form class="container">
+    <div class="row from-group" *ngIf="obj.user">
+      <label for="input" class="form-label">User</label
+      ><select
+        class="form-select form-control"
+        aria-label="Default select example"
+      >
+        <option selected>Open this select menu</option>
+        <ng-container *ngFor="let user of selectUser.data">
+          <option [value]="user.id">{{ user.name }}</option>
+        </ng-container>
+      </select>
+    </div>
+    <div class="row from-group mt-2" *ngIf="obj.title_id >= 0">
+      <label for="inputValue" class="form-label">Title</label
+      ><select
+        class="form-select form-control"
+        aria-label="Default select example"
+      >
+        <option selected>Open this select menu</option>
+        <ng-container *ngFor="let title of selectTitle.data">
+          <option [value]="title.id">{{ title.title }}</option>
+        </ng-container>
+      </select>
+    </div>
+    <div class="row from-group mt-2" *ngIf="obj.value >= 0">
+      <label for="inputValue" class="form-label">Value</label>
+      <input type="text" class="form-control" id="inputValue" />
+    </div>
+  </form>
+</div>
