@@ -15,11 +15,11 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    PagesModule,
     NgbModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     FontAwesomeModule,
+    PagesModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
