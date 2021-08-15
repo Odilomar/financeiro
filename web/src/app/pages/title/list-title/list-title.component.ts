@@ -30,5 +30,12 @@ export class ListTitleComponent implements OnInit {
   open(title = new Title()) {
     const modalRef = this.modalService.open(AppModalComponent);
     modalRef.componentInstance.obj = title;
+    modalRef.result.then(() => this.reload);
+  }
+
+  reload() {
+    this.titleService.find().subscribe((findTitle) => {
+      this.findTitle = findTitle;
+    });
   }
 }

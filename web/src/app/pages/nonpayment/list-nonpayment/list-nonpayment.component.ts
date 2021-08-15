@@ -30,5 +30,12 @@ export class ListNonPaymentComponent implements OnInit {
   open(nonPayment = new NonPayment()) {
     const modalRef = this.modalService.open(AppModalComponent);
     modalRef.componentInstance.obj = nonPayment;
+    modalRef.result.then(() => this.reload);
+  }
+
+  reload() {
+    this.nonPaymentService.find().subscribe((findNonPayment) => {
+      this.findNonPayment = findNonPayment;
+    });
   }
 }

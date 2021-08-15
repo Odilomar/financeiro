@@ -29,5 +29,12 @@ export class ListUserComponent implements OnInit {
   open(user = new User()) {
     const modalRef = this.modalService.open(AppModalComponent);
     modalRef.componentInstance.obj = user;
+    modalRef.result.then(() => this.reload);
+  }
+
+  reload() {
+    this.userService.find().subscribe((findUser) => {
+      this.findUser = findUser;
+    });
   }
 }

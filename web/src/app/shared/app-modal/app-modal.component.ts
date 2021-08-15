@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { DEFUALT_TAKE, GenericFindReturn } from 'src/app/core/utils';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
@@ -16,6 +16,7 @@ import { NonPaymentService } from 'src/app/pages/nonpayment/nonpayment.service';
 })
 export class AppModalComponent implements OnInit {
   @Input() obj: any;
+  @Output() reload = new EventEmitter<boolean>();
 
   title: string = '';
   selectUser = new GenericFindReturn<User>();
@@ -38,8 +39,12 @@ export class AppModalComponent implements OnInit {
 
     const user = this.obj;
     if (this.obj.id == 0) this.userService.create({ ...user }).subscribe();
-    if (this.obj.id != 0)
+    if (this.obj.id != 0) {
       this.userService.update(user.id, { ...user }).subscribe();
+      this.userService.findOne(user.id).subscribe((returnedUser) => {
+        this.obj = returnedUser;
+      });
+    }
   }
 
   private saveTitle() {
@@ -48,8 +53,12 @@ export class AppModalComponent implements OnInit {
     const title = this.obj;
 
     if (this.obj.id == 0) this.titleService.create({ ...title }).subscribe();
-    if (this.obj.id != 0)
+    if (this.obj.id != 0) {
       this.titleService.update(title.id, { ...title }).subscribe();
+      this.titleService.findOne(title.id).subscribe((returnedTitle) => {
+        this.obj = returnedTitle;
+      });
+    }
   }
 
   private saveNonPayment() {
@@ -65,7 +74,7 @@ export class AppModalComponent implements OnInit {
           user_id: Number(this.selectedUser),
         })
         .subscribe();
-    if (this.obj.id != 0)
+    if (this.obj.id != 0) {
       this.nonPaymentService
         .update(this.obj.id, {
           value: this.obj.value,
@@ -73,6 +82,13 @@ export class AppModalComponent implements OnInit {
           user_id: Number(this.selectedUser),
         })
         .subscribe();
+
+      this.nonPaymentService
+        .findOne(this.obj.id)
+        .subscribe((returnedNonPayment) => {
+          this.obj = returnedNonPayment;
+        });
+    }
   }
 
   isUser() {
