@@ -17,25 +17,25 @@ export class NonPaymentService {
 
   constructor(private http: HttpClient) {}
 
-  async findOne(id: number) {
+  findOne(id: number) {
     return this.http.get<NonPayment>(`${this.apiUrl}/${id}`);
   }
 
-  async find(args?: FindNonPayment) {
+  find(args?: FindNonPayment) {
     return this.http.get<GenericFindReturn<NonPayment>>(`${this.apiUrl}`, {
       params: { ...args },
     });
   }
 
-  async create(args: CreateNonPayment) {
+  create(args: CreateNonPayment) {
     return this.http.post<NonPayment>(this.apiUrl, args);
   }
 
-  async update(id: number, args: UpdateNonPayment) {
+  update(id: number, args: UpdateNonPayment) {
     return this.http.put(`${this.apiUrl}/${id}`, args);
   }
 
-  async delete(id: number) {
+  delete(id: number) {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
 }

@@ -13,25 +13,25 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  async findOne(id: number) {
+  findOne(id: number) {
     return this.http.get<User>(`${this.apiUrl}/${id}`);
   }
 
-  async find(args?: FindUser) {
+  find(args?: FindUser) {
     return this.http.get<GenericFindReturn<User>>(`${this.apiUrl}`, {
       params: { ...args },
     });
   }
 
-  async create(args: CreateUser) {
+  create(args: CreateUser) {
     return this.http.post<User>(this.apiUrl, args);
   }
 
-  async update(id: number, args: UpdateUser) {
+  update(id: number, args: UpdateUser) {
     return this.http.put(`${this.apiUrl}/${id}`, args);
   }
 
-  async delete(id: number) {
+  delete(id: number) {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
 }

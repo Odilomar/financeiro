@@ -17,7 +17,7 @@
       <td *ngIf="obj.created_at">{{ obj.created_at | date: "short" }}</td>
       <td *ngIf="obj.updated_at">{{ obj.updated_at | date: "short" }}</td>
       <td>
-        <button type="button">
+        <button type="button" (click)="open(obj)">
           <fa-icon [icon]="faEdit"></fa-icon>
         </button>
         <button type="button">

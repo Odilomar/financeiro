@@ -12,6 +12,7 @@ import { PagesModule } from './pages/pages.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SharedModule } from './shared/shared.module';
 import { APP_BASE_HREF } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,6 +26,7 @@ import { APP_BASE_HREF } from '@angular/common';
     FontAwesomeModule,
     PagesModule,
     SharedModule,
+    FormsModule,
   ],
   providers: [NgbActiveModal],
   bootstrap: [AppComponent],

@@ -21,11 +21,9 @@ export class ListUserComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.userService.find().then((subscription) =>
-      subscription.subscribe((findUser) => {
-        this.findUser = findUser;
-      })
-    );
+    this.userService.find().subscribe((findUser) => {
+      this.findUser = findUser;
+    });
   }
 
   open(user = new User()) {

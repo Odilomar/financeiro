@@ -22,11 +22,9 @@ export class ListNonPaymentComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.nonPaymentService.find().then((subscription) =>
-      subscription.subscribe((findNonPayment) => {
-        this.findNonPayment = findNonPayment;
-      })
-    );
+    this.nonPaymentService.find().subscribe((findNonPayment) => {
+      this.findNonPayment = findNonPayment;
+    });
   }
 
   open(nonPayment = new NonPayment()) {

@@ -22,11 +22,9 @@ export class ListTitleComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.titleService.find().then((subscription) =>
-      subscription.subscribe((findTitle) => {
-        this.findTitle = findTitle;
-      })
-    );
+    this.titleService.find().subscribe((findTitle) => {
+      this.findTitle = findTitle;
+    });
   }
 
   open(title = new Title()) {

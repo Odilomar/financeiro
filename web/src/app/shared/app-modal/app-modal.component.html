@@ -39,22 +39,47 @@
       </div>
       <div class="row from-group mt-2">
         <label for="inputValue" class="form-label">Value</label>
-        <input type="text" class="form-control" id="inputValue" />
+        <input
+          type="text"
+          class="form-control"
+          id="inputValue"
+          [(ngModel)]="obj.value"
+          name="value"
+        />
       </div>
     </ng-container>
 
     <ng-container *ngIf="isUser()">
       <div class="row from-group">
         <label for="inputName" class="form-label">Name</label>
-        <input type="text" class="form-control" id="inputName" />
+        <input
+          type="text"
+          class="form-control"
+          id="inputName"
+          [(ngModel)]="obj.name"
+          name="name"
+        />
       </div>
     </ng-container>
 
     <ng-container *ngIf="isTitle()">
       <div class="row from-group">
         <label for="inputTitle" class="form-label">Title</label>
-        <input type="text" class="form-control" id="inputTitle" />
+        <input
+          type="text"
+          class="form-control"
+          id="inputTitle"
+          [(ngModel)]="obj.title"
+          name="title"
+        />
       </div>
     </ng-container>
+
+    <div class="row from-group mt-2">
+      <button (click)="save()">
+        <fa-icon [icon]="faSave"></fa-icon>
+        Save
+      </button>
+    </div>
   </form>
 </div>
