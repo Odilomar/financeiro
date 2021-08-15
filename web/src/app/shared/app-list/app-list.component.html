@@ -13,6 +13,9 @@
       <td *ngIf="obj.name">
         {{ obj.name }}
       </td>
+      <td *ngIf="obj.title">
+        {{ obj.title }}
+      </td>
       <td *ngIf="obj.created_at">{{ obj.created_at | date: "short" }}</td>
       <td *ngIf="obj.updated_at">{{ obj.updated_at | date: "short" }}</td>
       <td>

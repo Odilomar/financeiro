@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { GenericFindReturn } from 'src/app/core/utils';
+import { GenericFindReturn, TypeEnum } from 'src/app/core/utils';
 import { faPlus, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { User } from 'src/app/pages/user/utils';
+import { Title } from 'src/app/pages/title/utils';
 
 @Component({
   selector: 'app-list',
@@ -9,10 +10,11 @@ import { User } from 'src/app/pages/user/utils';
   styleUrls: ['./app-list.component.css'],
 })
 export class AppListComponent implements OnInit {
-  @Input() object = new GenericFindReturn<User>();
+  @Input() object = new GenericFindReturn<User | Title>();
 
   headers: string[] = [];
-  data: User[] = [];
+  // data: any[] = [];
+  data: User[] | Title[] = [];
 
   faPlus = faPlus;
   faTrashAlt = faTrashAlt;
@@ -24,5 +26,7 @@ export class AppListComponent implements OnInit {
       header.replace(/_/g, ' ')
     );
     this.headers.pop();
+
+    console.log(this.headers);
   }
 }
