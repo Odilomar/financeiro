@@ -30,6 +30,8 @@ export class TitleService {
       where,
       relations: DEFAULTTITLERELATIONS,
       order: formatToOrder({ column, order }),
+      take,
+      skip,
     });
 
     return {

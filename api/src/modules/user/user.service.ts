@@ -34,6 +34,8 @@ export class UserService {
       where,
       relations: DEFAULTUSERRELATIONS,
       order: formatToOrder({ column, order }),
+      take,
+      skip,
     });
     return {
       data,

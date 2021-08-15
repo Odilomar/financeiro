@@ -42,6 +42,8 @@ export class NonPaymentService {
       where,
       relations: DEFAULTNONPAYMENTRELATIONS,
       order: formatToOrder({ column, order }),
+      take,
+      skip,
     });
 
     return {
