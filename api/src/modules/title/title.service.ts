@@ -4,7 +4,12 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { GenericFindReturnDto, objectToArray, Where } from 'src/utils';
+import {
+  formatToOrder,
+  GenericFindReturnDto,
+  objectToArray,
+  Where,
+} from 'src/utils';
 import { Repository } from 'typeorm';
 import { TITLENOTFOUND } from '.';
 import { CreateTitleDto, UpdateTitleDto, FindTitleDto } from './dto';
@@ -18,12 +23,13 @@ export class TitleService {
     private readonly titleRepository: Repository<TitleORM>,
   ) {}
 
-  async find({ take, skip, ...args }: FindTitleDto) {
+  async find({ take, skip, column, order, ...args }: FindTitleDto) {
     const where = await objectToArray<TitleORM>(args);
 
     const [data, total] = await this.titleRepository.findAndCount({
       where,
       relations: DEFAULTTITLERELATIONS,
+      order: formatToOrder({ column, order }),
     });
 
     return {

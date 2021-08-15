@@ -5,7 +5,12 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { GenericFindReturnDto, objectToArray, Where } from 'src/utils';
+import {
+  formatToOrder,
+  GenericFindReturnDto,
+  objectToArray,
+  Where,
+} from 'src/utils';
 import { Repository } from 'typeorm';
 import { TitleService, UserService } from '..';
 import {
@@ -30,12 +35,13 @@ export class NonPaymentService {
     private readonly titleService: TitleService,
   ) {}
 
-  async find({ take, skip, ...args }: FindNonPaymentDto) {
+  async find({ take, skip, column, order, ...args }: FindNonPaymentDto) {
     const where = await objectToArray<NonPaymentORM>(args);
 
     const [data, total] = await this.nonPaymentRepository.findAndCount({
       where,
       relations: DEFAULTNONPAYMENTRELATIONS,
+      order: formatToOrder({ column, order }),
     });
 
     return {

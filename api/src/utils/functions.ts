@@ -1,5 +1,10 @@
 export const a = async () => {};
 
+interface FormatToOrder {
+  column: string;
+  order: string;
+}
+
 export async function objectToArray<T>(args: any) {
   const keys = Object.keys(args);
   const where = await Promise.all(
@@ -9,4 +14,8 @@ export async function objectToArray<T>(args: any) {
   );
 
   return <Array<T>>where;
+}
+
+export function formatToOrder({ column, order }: FormatToOrder) {
+  return JSON.parse(`{ "${column}": "${order}" }`);
 }

@@ -4,7 +4,12 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { GenericFindReturnDto, objectToArray, Where } from 'src/utils';
+import {
+  formatToOrder,
+  GenericFindReturnDto,
+  objectToArray,
+  Where,
+} from 'src/utils';
 import { Repository } from 'typeorm';
 import { CreateUserDto, UpdateUserDto } from './dto';
 import { FindUserDto } from './dto/find-user.dto';
@@ -22,12 +27,13 @@ export class UserService {
     private readonly userRepository: Repository<UserORM>,
   ) {}
 
-  async find({ take, skip, ...args }: FindUserDto) {
+  async find({ take, skip, column, order, ...args }: FindUserDto) {
     const where = await objectToArray<Where<UserORM>>(args);
 
     const [data, total] = await this.userRepository.findAndCount({
       where,
       relations: DEFAULTUSERRELATIONS,
+      order: formatToOrder({ column, order }),
     });
     return {
       data,
