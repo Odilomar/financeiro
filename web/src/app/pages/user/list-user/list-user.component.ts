@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GenericFindReturn } from 'src/app/core/utils';
 import { UserService } from '../user.service';
 import { User } from '../utils';
 @Component({
@@ -7,20 +8,14 @@ import { User } from '../utils';
   styleUrls: ['./list-user.component.css'],
 })
 export class ListUserComponent implements OnInit {
-  users: User[] = [];
-  total: number = 0;
-  take: number = 0;
-  skip: number = 0;
+  findUser = new GenericFindReturn<User>();
 
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
     this.userService.find().then((subscription) =>
-      subscription.subscribe(({ data, total, take, skip }) => {
-        this.users = data;
-        this.total = total;
-        this.take = take;
-        this.skip = skip;
+      subscription.subscribe((findUser) => {
+        this.findUser = findUser;
       })
     );
   }

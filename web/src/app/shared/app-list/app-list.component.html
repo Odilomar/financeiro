@@ -1,0 +1,28 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th *ngFor="let header of headers" scope="col">
+        {{ header | titlecase }}
+      </th>
+      <th>Options</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let obj of object.data">
+      <th scope="row" *ngIf="obj.id">{{ obj.id }}</th>
+      <td *ngIf="obj.name">
+        {{ obj.name }}
+      </td>
+      <td *ngIf="obj.created_at">{{ obj.created_at | date: "short" }}</td>
+      <td *ngIf="obj.updated_at">{{ obj.updated_at | date: "short" }}</td>
+      <td>
+        <button type="button">
+          <fa-icon [icon]="faPlus"></fa-icon>
+        </button>
+        <button type="button">
+          <fa-icon [icon]="faTrashAlt"></fa-icon>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

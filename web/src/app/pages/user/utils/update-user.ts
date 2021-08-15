@@ -1,3 +1,3 @@
-export interface UpdateUser {
+export class UpdateUser {
   name?: string;
 }

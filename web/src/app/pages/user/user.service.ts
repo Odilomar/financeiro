@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { GenericFindReturn } from 'src/app/core/utils';
 import { environment } from 'src/environments/environment.prod';
-import { CreateUser, FindUser, UpdateUser, User } from './utils';
-import { FindUserReturn } from './utils/find-user-return';
+import { CreateUser, UpdateUser, User } from './utils';
+import { FindUser } from './utils/find-user';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,7 @@ export class UserService {
   }
 
   async find(args?: FindUser) {
-    return this.http.get<FindUserReturn>(`${this.apiUrl}`, {
+    return this.http.get<GenericFindReturn<User>>(`${this.apiUrl}`, {
       params: { ...args },
     });
   }
