@@ -3,6 +3,7 @@ import { GenericFindReturn, TypeEnum } from 'src/app/core/utils';
 import { faPlus, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { User } from 'src/app/pages/user/utils';
 import { Title } from 'src/app/pages/title/utils';
+import { NonPayment } from 'src/app/pages/nonpayment/utils';
 
 @Component({
   selector: 'app-list',
@@ -10,11 +11,18 @@ import { Title } from 'src/app/pages/title/utils';
   styleUrls: ['./app-list.component.css'],
 })
 export class AppListComponent implements OnInit {
-  @Input() object = new GenericFindReturn<User | Title>();
+  @Input() object = new GenericFindReturn<User | Title | NonPayment>();
 
-  headers: string[] = [];
-  // data: any[] = [];
-  data: User[] | Title[] = [];
+  headers: string[] = [
+    'id',
+    'name',
+    'user',
+    'title',
+    'value',
+    'created at',
+    'updated at',
+  ];
+  data: User[] | Title[] | NonPayment[] = [];
 
   faPlus = faPlus;
   faTrashAlt = faTrashAlt;
@@ -22,11 +30,9 @@ export class AppListComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.headers = Object.keys(this.object.data[0]).map((header) =>
-      header.replace(/_/g, ' ')
+    const obj = Object.keys(this.object.data[0]).map((value) =>
+      value.replace(/_/g, ' ')
     );
-    this.headers.pop();
-
-    console.log(this.headers);
+    this.headers = this.headers.filter((header) => obj.includes(header));
   }
 }
