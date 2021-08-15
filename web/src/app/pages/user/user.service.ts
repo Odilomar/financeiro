@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment.prod';
+import { CreateUser, FindUser, UpdateUser, User } from './utils';
+import { FindUserReturn } from './utils/find-user-return';
 
 @Injectable({
   providedIn: 'root',
@@ -11,18 +13,20 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   async findOne(id: number) {
-    return this.http.get(`${this.apiUrl}/${id}`);
+    return this.http.get<User>(`${this.apiUrl}/${id}`);
   }
 
-  async find() {
-    return this.http.get(`${this.apiUrl}`);
+  async find(args?: FindUser) {
+    return this.http.get<FindUserReturn>(`${this.apiUrl}`, {
+      params: { ...args },
+    });
   }
 
-  async create(args: any) {
-    return this.http.post(this.apiUrl, args);
+  async create(args: CreateUser) {
+    return this.http.post<User>(this.apiUrl, args);
   }
 
-  async update(id: number, args: any) {
+  async update(id: number, args: UpdateUser) {
     return this.http.put(`${this.apiUrl}/${id}`, args);
   }
 

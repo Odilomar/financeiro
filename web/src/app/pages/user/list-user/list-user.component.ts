@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from '../user.service';
 
 interface Country {
   name: string;
@@ -41,7 +42,13 @@ const COUNTRIES: Country[] = [
 export class ListUserComponent implements OnInit {
   countries = COUNTRIES;
 
-  constructor() {}
+  constructor(private userService: UserService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.userService
+      .find()
+      .then((subscription) =>
+        subscription.subscribe((user) => console.log(user))
+      );
+  }
 }
