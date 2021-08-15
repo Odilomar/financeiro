@@ -21,6 +21,9 @@ export class AppModalComponent implements OnInit {
   selectUser = new GenericFindReturn<User>();
   selectTitle = new GenericFindReturn<Title>();
 
+  selectedUser: number = 0;
+  selectedTitle: number = 0;
+
   faSave = faSave;
 
   constructor(
@@ -51,13 +54,24 @@ export class AppModalComponent implements OnInit {
 
   private saveNonPayment() {
     if (!this.obj.value) console.log('error');
+    if (this.selectedUser == 0) console.log('error');
+    if (this.selectedTitle == 0) console.log('error');
 
-    const nonPayment = this.obj;
     if (this.obj.id == 0)
-      this.nonPaymentService.create({ ...nonPayment }).subscribe();
+      this.nonPaymentService
+        .create({
+          value: this.obj.value,
+          title_id: Number(this.selectedTitle),
+          user_id: Number(this.selectedUser),
+        })
+        .subscribe();
     if (this.obj.id != 0)
       this.nonPaymentService
-        .update(nonPayment.id, { ...nonPayment })
+        .update(this.obj.id, {
+          value: this.obj.value,
+          title_id: Number(this.selectedTitle),
+          user_id: Number(this.selectedUser),
+        })
         .subscribe();
   }
 
@@ -89,6 +103,8 @@ export class AppModalComponent implements OnInit {
       }
       if (this.obj.id > 0) {
         this.title = 'Update NonPayment';
+        this.selectedUser = this.obj.user_id;
+        this.selectedTitle = this.obj.title_id;
       }
     }
     if (this.isTitle()) {
