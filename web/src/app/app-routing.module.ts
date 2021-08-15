@@ -5,7 +5,7 @@ import { ListTitleComponent } from './pages/title/list-title/list-title.componen
 import { ListUserComponent } from './pages/user/list-user/list-user.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'user', pathMatch: 'full' },
+  { path: '', redirectTo: 'nonpayment', pathMatch: 'full' },
   { path: 'user', component: ListUserComponent },
   { path: 'title', component: ListTitleComponent },
   { path: 'nonpayment', component: ListNonPaymentComponent },
