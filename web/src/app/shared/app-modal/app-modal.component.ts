@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { GenericFindReturn } from 'src/app/core/utils';
+import { DEFUALT_TAKE, GenericFindReturn } from 'src/app/core/utils';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
 import { NonPayment } from 'src/app/pages/nonpayment/utils';
 import { TitleService } from 'src/app/pages/title/title.service';
@@ -92,20 +92,35 @@ export class AppModalComponent implements OnInit {
       this.title = this.obj.id == 0 ? 'Create User' : 'Update User';
     }
     if (this.isNonPayment()) {
+      let take: number = DEFUALT_TAKE;
+
       if (this.obj.id == 0) {
         this.title = 'Create NonPayment';
-        this.userService.find().subscribe((user) => {
-          this.selectUser = user;
-        });
-        this.titleService.find().subscribe((title) => {
-          this.selectTitle = title;
-        });
       }
       if (this.obj.id > 0) {
+        take -= 1;
         this.title = 'Update NonPayment';
         this.selectedUser = this.obj.user_id;
         this.selectedTitle = this.obj.title_id;
+
+        this.userService.findOne(this.selectedUser).subscribe((user) => {
+          Object.assign(this.selectUser, {
+            data: [...this.selectUser.data, user],
+          });
+        });
+        this.titleService.findOne(this.selectedTitle).subscribe((title) => {
+          Object.assign(this.selectTitle, {
+            data: [...this.selectTitle.data, title],
+          });
+        });
       }
+
+      this.userService.find({ take }).subscribe((user) => {
+        this.selectUser = user;
+      });
+      this.titleService.find({ take }).subscribe((title) => {
+        this.selectTitle = title;
+      });
     }
     if (this.isTitle()) {
       this.title = this.obj.id == 0 ? 'Create Title' : 'Update Title';
