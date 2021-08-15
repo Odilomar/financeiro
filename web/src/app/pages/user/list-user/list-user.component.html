@@ -1,29 +1,20 @@
-<p>Table is just a mapping of objects to table rows with <code>ngFor</code></p>
-
 <table class="table table-striped">
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Country</th>
-      <th scope="col">Area</th>
-      <th scope="col">Population</th>
+      <th scope="col">name</th>
+      <th scope="col">created_at</th>
+      <th scope="col">updated_at</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let country of countries; index as i">
-      <th scope="row">{{ i + 1 }}</th>
+    <tr *ngFor="let user of users; index as i">
+      <th scope="row">{{ user.id }}</th>
       <td>
-        <img
-          [src]="
-            'https://upload.wikimedia.org/wikipedia/commons/' + country.flag
-          "
-          class="mr-2"
-          style="width: 20px"
-        />
-        {{ country.name }}
+        {{ user.name }}
       </td>
-      <td>{{ country.area | number }}</td>
-      <td>{{ country.population | number }}</td>
+      <td>{{ user.created_at | date: "short" }}</td>
+      <td>{{ user.updated_at | date: "short" }}</td>
     </tr>
   </tbody>
 </table>
