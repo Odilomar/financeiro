@@ -26,13 +26,15 @@ export class AppModalComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if (this.obj instanceof User) {
+    console.log(this.obj);
+
+    if (this.isUser()) {
       this.title = this.obj.id == 0 ? 'Create User' : 'Update User';
     }
-    if (this.obj instanceof Title) {
+    if (this.isTitle()) {
       this.title = this.obj.id == 0 ? 'Create Title' : 'Update Title';
     }
-    if (this.obj instanceof NonPayment) {
+    if (this.isNonPayment()) {
       if (this.obj.id == 0) {
         this.title = 'Create NonPayment';
         this.userService.find().then((subscription) =>
@@ -50,5 +52,17 @@ export class AppModalComponent implements OnInit {
         this.title = 'Update NonPayment';
       }
     }
+  }
+
+  isUser() {
+    return this.obj instanceof User;
+  }
+
+  isTitle() {
+    return this.obj instanceof Title;
+  }
+
+  isNonPayment() {
+    return this.obj instanceof NonPayment;
   }
 }

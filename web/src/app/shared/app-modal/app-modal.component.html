@@ -12,33 +12,49 @@
 
 <div class="modal-body">
   <form class="container">
-    <div class="row from-group" *ngIf="obj.user">
-      <label for="input" class="form-label">User</label
-      ><select
-        class="form-select form-control"
-        aria-label="Default select example"
-      >
-        <option selected>Open this select menu</option>
-        <ng-container *ngFor="let user of selectUser.data">
-          <option [value]="user.id">{{ user.name }}</option>
-        </ng-container>
-      </select>
-    </div>
-    <div class="row from-group mt-2" *ngIf="obj.title_id >= 0">
-      <label for="inputValue" class="form-label">Title</label
-      ><select
-        class="form-select form-control"
-        aria-label="Default select example"
-      >
-        <option selected>Open this select menu</option>
-        <ng-container *ngFor="let title of selectTitle.data">
-          <option [value]="title.id">{{ title.title }}</option>
-        </ng-container>
-      </select>
-    </div>
-    <div class="row from-group mt-2" *ngIf="obj.value >= 0">
-      <label for="inputValue" class="form-label">Value</label>
-      <input type="text" class="form-control" id="inputValue" />
-    </div>
+    <ng-container *ngIf="isNonPayment()">
+      <div class="row from-group">
+        <label for="input" class="form-label">User</label
+        ><select
+          class="form-select form-control"
+          aria-label="Default select example"
+        >
+          <option selected>Open this select menu</option>
+          <ng-container *ngFor="let user of selectUser.data">
+            <option [value]="user.id">{{ user.name }}</option>
+          </ng-container>
+        </select>
+      </div>
+      <div class="row from-group mt-2">
+        <label for="inputValue" class="form-label">Title</label
+        ><select
+          class="form-select form-control"
+          aria-label="Default select example"
+        >
+          <option selected>Open this select menu</option>
+          <ng-container *ngFor="let title of selectTitle.data">
+            <option [value]="title.id">{{ title.title }}</option>
+          </ng-container>
+        </select>
+      </div>
+      <div class="row from-group mt-2">
+        <label for="inputValue" class="form-label">Value</label>
+        <input type="text" class="form-control" id="inputValue" />
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="isUser()">
+      <div class="row from-group">
+        <label for="inputName" class="form-label">Name</label>
+        <input type="text" class="form-control" id="inputName" />
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="isTitle()">
+      <div class="row from-group">
+        <label for="inputTitle" class="form-label">Title</label>
+        <input type="text" class="form-control" id="inputTitle" />
+      </div>
+    </ng-container>
   </form>
 </div>
