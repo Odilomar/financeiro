@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GenericFindReturn } from 'src/app/core/utils';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { UserService } from '../user.service';
 import { User } from '../utils';
 @Component({
@@ -8,6 +9,8 @@ import { User } from '../utils';
   styleUrls: ['./list-user.component.css'],
 })
 export class ListUserComponent implements OnInit {
+  faPlus = faPlus;
+  title = 'User';
   findUser = new GenericFindReturn<User>();
 
   constructor(private userService: UserService) {}

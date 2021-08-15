@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { GenericFindReturn, TypeEnum } from 'src/app/core/utils';
-import { faPlus, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { User } from 'src/app/pages/user/utils';
 import { Title } from 'src/app/pages/title/utils';
 import { NonPayment } from 'src/app/pages/nonpayment/utils';
@@ -26,6 +26,7 @@ export class AppListComponent implements OnInit {
 
   faPlus = faPlus;
   faTrashAlt = faTrashAlt;
+  faEdit = faEdit;
 
   constructor() {}
 
