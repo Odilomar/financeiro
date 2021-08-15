@@ -1,11 +1,19 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { GenericFindReturn } from 'src/app/core/utils';
+import {
+  GenericFindReturn,
+  isInstanceOfNonPayment,
+  isInstanceOfTitle,
+  isInstanceOfUser,
+} from 'src/app/core/utils';
 import { faPlus, faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { User } from 'src/app/pages/user/utils';
 import { Title } from 'src/app/pages/title/utils';
 import { NonPayment } from 'src/app/pages/nonpayment/utils';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppModalComponent } from '../app-modal/app-modal.component';
+import { UserService } from 'src/app/pages/user/user.service';
+import { TitleService } from 'src/app/pages/title/title.service';
+import { NonPaymentService } from 'src/app/pages/nonpayment/nonpayment.service';
 
 @Component({
   selector: 'app-list',
@@ -30,7 +38,12 @@ export class AppListComponent implements OnInit {
   faTrashAlt = faTrashAlt;
   faEdit = faEdit;
 
-  constructor(private modalService: NgbModal) {}
+  constructor(
+    private modalService: NgbModal,
+    private readonly userService: UserService,
+    private readonly titleService: TitleService,
+    private readonly nonPaymentService: NonPaymentService
+  ) {}
 
   ngOnInit(): void {
     const obj = Object.keys(this.object.data[0]).map((value) =>
@@ -42,5 +55,12 @@ export class AppListComponent implements OnInit {
   open(obj: any) {
     const modalRef = this.modalService.open(AppModalComponent);
     modalRef.componentInstance.obj = obj;
+  }
+
+  delete(obj: any) {
+    if (isInstanceOfUser(obj)) this.userService.delete(obj.id).subscribe();
+    if (isInstanceOfTitle(obj)) this.titleService.delete(obj.id).subscribe();
+    if (isInstanceOfNonPayment(obj))
+      this.nonPaymentService.delete(obj.id).subscribe();
   }
 }

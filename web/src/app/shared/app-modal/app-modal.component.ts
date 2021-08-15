@@ -1,6 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { DEFUALT_TAKE, GenericFindReturn } from 'src/app/core/utils';
+import {
+  DEFUALT_TAKE,
+  GenericFindReturn,
+  isInstanceOfNonPayment,
+  isInstanceOfTitle,
+  isInstanceOfUser,
+} from 'src/app/core/utils';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
 import { NonPayment } from 'src/app/pages/nonpayment/utils';
 import { TitleService } from 'src/app/pages/title/title.service';
@@ -92,15 +98,15 @@ export class AppModalComponent implements OnInit {
   }
 
   isUser() {
-    return this.obj instanceof User || this.obj.name;
+    return isInstanceOfUser(this.obj);
   }
 
   isTitle() {
-    return this.obj instanceof Title || (this.obj.title && !this.obj.title_id);
+    return isInstanceOfTitle(this.obj);
   }
 
   isNonPayment() {
-    return this.obj instanceof NonPayment || this.obj.user_id;
+    return isInstanceOfNonPayment(this.obj);
   }
 
   ngOnInit(): void {
